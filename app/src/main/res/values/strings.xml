@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Drag n Drop</string>
+
+    <string name="label_ball">Ball</string>
 </resources>
