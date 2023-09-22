@@ -98,8 +98,10 @@ class MainActivity : AppCompatActivity() {
                 val cardView = binding.llBottom.getChildAt(i) as? MaterialCardView
                 cardView?.let {
                     val ballText = it.getChildAt(0) as? TextView
-                    ballText?.let {
-                        totalString.add(it.text.toString())
+                    ballText?.let { tv ->
+                        if (tv.contentDescription != null) {
+                            totalString.add(tv.contentDescription.toString())
+                        }
                     }
                 }
             }
