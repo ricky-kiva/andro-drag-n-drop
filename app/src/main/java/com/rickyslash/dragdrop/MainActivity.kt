@@ -64,7 +64,9 @@ class MainActivity : AppCompatActivity() {
             DragEvent.ACTION_DROP -> {
                 val item = event.clipData.getItemAt(0) // retrieve the first item from ClipData
                 val dragData = item.text // get first item content
-                Toast.makeText(this, dragData, Toast.LENGTH_SHORT).show()
+
+                // if want to see the data
+                // Toast.makeText(this, dragData, Toast.LENGTH_SHORT).show()
 
                 v.invalidate() // redraw the view (call this before making changes in view's layout)
 
@@ -219,8 +221,10 @@ class MainActivity : AppCompatActivity() {
 
             if (result != null) {
                 binding.tvTotal.text = getString(R.string.label_result_int, result)
+                Toast.makeText(this, getString(R.string.label_result_int, result), Toast.LENGTH_SHORT).show()
             } else {
                 binding.tvTotal.text = getString(R.string.err_expression_invalid)
+                Toast.makeText(this, getString(R.string.err_expression_invalid), Toast.LENGTH_SHORT).show()
             }
         }
     }
