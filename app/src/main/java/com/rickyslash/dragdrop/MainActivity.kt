@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it) // create shadow during drag & drop
             it.startDragAndDrop(data, dragShadow, it, 0) // initiate the drag & drop operation
 
-            it.visibility = View.INVISIBLE // set this object to be invisible while drag & dropped
+//            it.visibility = View.INVISIBLE // set this object to be invisible while drag & dropped
             true
         }
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadow, it, 0)
 
-            it.visibility = View.INVISIBLE
+//            it.visibility = View.INVISIBLE
             true
         }
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadow, it, 0)
 
-            it.visibility = View.INVISIBLE
+//            it.visibility = View.INVISIBLE
             true
         }
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadow, it, 0)
 
-            it.visibility = View.INVISIBLE
+//            it.visibility = View.INVISIBLE
             true
         }
 
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadow, it, 0)
 
-            it.visibility = View.INVISIBLE
+//            it.visibility = View.INVISIBLE
             true
         }
 
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadow, it, 0)
 
-            it.visibility = View.INVISIBLE
+//            it.visibility = View.INVISIBLE
             true
         }
 
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             val dragShadow = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadow, it, 0)
 
-            it.visibility = View.INVISIBLE
+//            it.visibility = View.INVISIBLE
             true
         }
 
@@ -147,10 +147,15 @@ class MainActivity : AppCompatActivity() {
     // `v` is the destination view
     // `event` encapsulates information about the drag-n-drop operation
     private val dragListener = View.OnDragListener { v, event ->
+
+        val dragObject = event.localState as View // get the dragged item view
+
         when(event.action) {
 
             // when drag operation starts, this triggered
             DragEvent.ACTION_DRAG_STARTED -> {
+                v.invalidate()
+                dragObject.visibility = View.INVISIBLE // change visibility of dragged object
                 // check if the dragged data has a MIME type of plain text, not continuing the process if false
                 event.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)
             }
@@ -178,7 +183,6 @@ class MainActivity : AppCompatActivity() {
 
                 v.invalidate() // redraw the view (call this before making changes in view's layout)
 
-                val dragObject = event.localState as View // get the dragged item view
                 val dragParent = dragObject.parent as ViewGroup // get the dragged item parent
                 dragParent.removeView(dragObject) // remove the dragged item from its parent
 
@@ -221,12 +225,14 @@ class MainActivity : AppCompatActivity() {
                 // destination.addView(dragObject) // add dragged item to the destination
 
                 dragObject.visibility = View.VISIBLE // change visibility of dragged object
+
                 true
             }
 
             // when drag operation ends
             DragEvent.ACTION_DRAG_ENDED -> {
                 v.invalidate() // redraw the view
+                dragObject.visibility = View.VISIBLE // change visibility of dragged object
                 true
             }
 
