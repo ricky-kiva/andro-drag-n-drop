@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.DragEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.card.MaterialCardView
 import com.rickyslash.dragdrop.databinding.ActivityMainBinding
 import net.objecthunter.exp4j.ExpressionBuilder
@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.llTop.setOnDragListener(dragListener)
-        binding.llBottom.setOnDragListener(dragListener)
+        binding.fblTop.setOnDragListener(dragListener)
+        binding.fblBottom.setOnDragListener(dragListener)
 
         binding.viewBallOne.setOnLongClickListener {
             val clipText = "Goal! Good job Messi!" // content for the data
@@ -92,11 +92,37 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        binding.viewBallSix.setOnLongClickListener {
+            val clipText = "Goal! Good job Neymar!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+
+        binding.viewBallSeven.setOnLongClickListener {
+            val clipText = "Goal! Good job Neymar!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+
         binding.fabTotal.setOnClickListener {
             val totalString = mutableListOf<String>()
 
-            for (i in 0 until binding.llBottom.childCount) {
-                val cardView = binding.llBottom.getChildAt(i) as? MaterialCardView
+            for (i in 0 until binding.fblBottom.childCount) {
+                val cardView = binding.fblBottom.getChildAt(i) as? MaterialCardView
                 cardView?.let {
                     val ballText = it.getChildAt(0) as? TextView
                     ballText?.let { tv ->
@@ -156,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                 val dragParent = dragObject.parent as ViewGroup // get the dragged item parent
                 dragParent.removeView(dragObject) // remove the dragged item from its parent
 
-                val destination = v as LinearLayout // set destination view as linear layout
+                val destination = v as FlexboxLayout // set destination view as linear layout
 
                 val x = event.x
                 val y = event.y
