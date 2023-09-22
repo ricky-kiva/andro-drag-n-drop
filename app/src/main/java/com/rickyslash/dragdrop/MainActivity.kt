@@ -12,7 +12,6 @@ import android.widget.Toast
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.card.MaterialCardView
 import com.rickyslash.dragdrop.databinding.ActivityMainBinding
-import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,121 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding.fblTop.setOnDragListener(dragListener)
         binding.fblBottom.setOnDragListener(dragListener)
 
-        binding.viewBallOne.setOnLongClickListener {
-            val clipText = "Goal! Good job Messi!" // content for the data
-            val item = ClipData.Item(clipText) // contains the data that will be drag & dropped (placed on clipboard)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)  // type of data that is being put to the clipboard
-            val data = ClipData(clipText, mimeTypes, item) // packages of the data to copy
-
-            val dragShadow = View.DragShadowBuilder(it) // create shadow during drag & drop
-            it.startDragAndDrop(data, dragShadow, it, 0) // initiate the drag & drop operation
-
-//            it.visibility = View.INVISIBLE // set this object to be invisible while drag & dropped
-            true
-        }
-
-        binding.viewBallTwo.setOnLongClickListener {
-            val clipText = "Goal! Good job Ronaldo!"
-            val item = ClipData.Item(clipText)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(clipText, mimeTypes, item)
-
-            val dragShadow = View.DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadow, it, 0)
-
-//            it.visibility = View.INVISIBLE
-            true
-        }
-
-        binding.viewBallThree.setOnLongClickListener {
-            val clipText = "Goal! Good job Zidane!"
-            val item = ClipData.Item(clipText)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(clipText, mimeTypes, item)
-
-            val dragShadow = View.DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadow, it, 0)
-
-//            it.visibility = View.INVISIBLE
-            true
-        }
-
-        binding.viewBallFour.setOnLongClickListener {
-            val clipText = "Goal! Good job Maradona!"
-            val item = ClipData.Item(clipText)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(clipText, mimeTypes, item)
-
-            val dragShadow = View.DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadow, it, 0)
-
-//            it.visibility = View.INVISIBLE
-            true
-        }
-
-        binding.viewBallFive.setOnLongClickListener {
-            val clipText = "Goal! Good job Neymar!"
-            val item = ClipData.Item(clipText)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(clipText, mimeTypes, item)
-
-            val dragShadow = View.DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadow, it, 0)
-
-//            it.visibility = View.INVISIBLE
-            true
-        }
-
-        binding.viewBallSix.setOnLongClickListener {
-            val clipText = "Goal! Good job Neymar!"
-            val item = ClipData.Item(clipText)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(clipText, mimeTypes, item)
-
-            val dragShadow = View.DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadow, it, 0)
-
-//            it.visibility = View.INVISIBLE
-            true
-        }
-
-        binding.viewBallSeven.setOnLongClickListener {
-            val clipText = "Goal! Good job Neymar!"
-            val item = ClipData.Item(clipText)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(clipText, mimeTypes, item)
-
-            val dragShadow = View.DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadow, it, 0)
-
-//            it.visibility = View.INVISIBLE
-            true
-        }
-
-        binding.fabTotal.setOnClickListener {
-            val totalString = mutableListOf<String>()
-
-            for (i in 0 until binding.fblBottom.childCount) {
-                val cardView = binding.fblBottom.getChildAt(i) as? MaterialCardView
-                cardView?.let {
-                    val ballText = it.getChildAt(0) as? TextView
-                    ballText?.let { tv ->
-                        if (tv.contentDescription != null) {
-                            totalString.add(tv.contentDescription.toString())
-                        }
-                    }
-                }
-            }
-
-            val currentExpression = totalString.joinToString(" ") { it }
-            val result = evaluateMath(currentExpression)
-
-            if (result != null) {
-                binding.tvTotal.text = "result: $result"
-            } else {
-                binding.tvTotal.text = "Invalid expression"
-            }
-        }
+        setClickAction()
     }
 
     // `v` is the destination view
@@ -155,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             // when drag operation starts, this triggered
             DragEvent.ACTION_DRAG_STARTED -> {
                 v.invalidate()
-                dragObject.visibility = View.INVISIBLE // change visibility of dragged object
+                dragObject.visibility = View.INVISIBLE // set object visible when it's dragged
                 // check if the dragged data has a MIME type of plain text, not continuing the process if false
                 event.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)
             }
@@ -188,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
                 val destination = v as FlexboxLayout // set destination view as linear layout
 
+                // adjust drag and drop position
                 val x = event.x
                 val y = event.y
 
@@ -196,7 +82,6 @@ class MainActivity : AppCompatActivity() {
 
                 for (i in 0 until childCount) {
                     val child = destination.getReorderedChildAt(i)
-                    val params = child.layoutParams as FlexboxLayout.LayoutParams
 
                     val childHalfHeight = child.height / 2
                     val childHalfWidth = child.width / 2
@@ -221,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             // when drag operation ends
             DragEvent.ACTION_DRAG_ENDED -> {
                 v.invalidate() // redraw the view
-                dragObject.visibility = View.VISIBLE // change visibility of dragged object
+                dragObject.visibility = View.VISIBLE // set object visible when it's dropped
                 true
             }
 
@@ -229,12 +114,114 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun evaluateMath(expression: String): Int? {
-        return try {
-            val result = ExpressionBuilder(expression).build().evaluate().toInt()
-            result
-        } catch (e: Exception) {
-            null
+    private fun setClickAction() {
+        binding.viewBallOne.setOnLongClickListener {
+            val clipText = "Goal! Good job Messi!" // content for the data
+            val item = ClipData.Item(clipText) // contains the data that will be drag & dropped (placed on clipboard)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)  // type of data that is being put to the clipboard
+            val data = ClipData(clipText, mimeTypes, item) // packages of the data to copy
+
+            val dragShadow = View.DragShadowBuilder(it) // create shadow during drag & drop
+            it.startDragAndDrop(data, dragShadow, it, 0) // initiate the drag & drop operation
+
+            true
+        }
+
+        binding.viewBallTwo.setOnLongClickListener {
+            val clipText = "Goal! Good job Ronaldo!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            true
+        }
+
+        binding.viewBallThree.setOnLongClickListener {
+            val clipText = "Goal! Good job Zidane!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            true
+        }
+
+        binding.viewBallFour.setOnLongClickListener {
+            val clipText = "Goal! Good job Maradona!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            true
+        }
+
+        binding.viewBallFive.setOnLongClickListener {
+            val clipText = "Goal! Good job Neymar!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            true
+        }
+
+        binding.viewBallSix.setOnLongClickListener {
+            val clipText = "Goal! Good job Pele!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            true
+        }
+
+        binding.viewBallSeven.setOnLongClickListener {
+            val clipText = "Goal! Good job Ronaldinho!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            true
+        }
+
+        binding.fabTotal.setOnClickListener {
+            val totalString = mutableListOf<String>()
+
+            for (i in 0 until binding.fblBottom.childCount) {
+                val cardView = binding.fblBottom.getChildAt(i) as? MaterialCardView
+                cardView?.let {
+                    val ballText = it.getChildAt(0) as? TextView
+                    ballText?.let { tv ->
+                        if (tv.contentDescription != null) {
+                            totalString.add(tv.contentDescription.toString())
+                        }
+                    }
+                }
+            }
+
+            val currentExpression = totalString.joinToString(" ") { it }
+            val result = evaluateMathFromString(currentExpression)
+
+            if (result != null) {
+                binding.tvTotal.text = getString(R.string.label_result_int, result)
+            } else {
+                binding.tvTotal.text = getString(R.string.err_expression_invalid)
+            }
         }
     }
 }

@@ -3,4 +3,9 @@
 
     <string name="label_ball">Ball</string>
     <string name="label_total_bottom">Bottom Total</string>
+    <string name="label_result_int">Result: %1$d</string>
+
+    <string name="desc_count_total">Count total</string>
+
+    <string name="err_expression_invalid">Invalid expression</string>
 </resources>
