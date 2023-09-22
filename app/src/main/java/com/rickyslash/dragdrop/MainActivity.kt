@@ -8,7 +8,9 @@ import android.view.DragEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.card.MaterialCardView
 import com.rickyslash.dragdrop.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding.llTop.setOnDragListener(dragListener)
         binding.llBottom.setOnDragListener(dragListener)
 
-        binding.viewBall.setOnLongClickListener {
+        binding.viewBallOne.setOnLongClickListener {
             val clipText = "Goal! Good job Messi!" // content for the data
             val item = ClipData.Item(clipText) // contains the data that will be drag & dropped (placed on clipboard)
             val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)  // type of data that is being put to the clipboard
@@ -61,6 +63,48 @@ class MainActivity : AppCompatActivity() {
 
             it.visibility = View.INVISIBLE
             true
+        }
+
+        binding.viewBallFour.setOnLongClickListener {
+            val clipText = "Goal! Good job Maradona!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+
+        binding.viewBallFive.setOnLongClickListener {
+            val clipText = "Goal! Good job Neymar!"
+            val item = ClipData.Item(clipText)
+            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mimeTypes, item)
+
+            val dragShadow = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadow, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+
+        binding.fabTotal.setOnClickListener {
+            val totalString = mutableListOf<String>()
+
+            for (i in 0 until binding.llBottom.childCount) {
+                val cardView = binding.llBottom.getChildAt(i) as? MaterialCardView
+                cardView?.let {
+                    val ballText = it.getChildAt(0) as? TextView
+                    ballText?.let {
+                        totalString.add(it.text.toString())
+                    }
+                }
+            }
+
+            binding.tvTotal.text = totalString.joinToString(" ") { it }
         }
     }
 
@@ -117,28 +161,26 @@ class MainActivity : AppCompatActivity() {
                     val childHalfWidth = firstChild.width / 2
 
                     if (y < firstChild.y + childHalfHeight && x < firstChild.x + childHalfWidth) {
-                        index = 0 // Drop position is to the left of the first child
+                        index = 0
                     } else if (y > lastChild.y + childHalfHeight && x > lastChild.x + childHalfWidth) {
-                        index = childCount // Drop position is to the right of the last child
-                    } else {
-                        for (i in childCount - 1 downTo 0) {
-                            val child = destination.getChildAt(i)
-                            val childHalfHeight = child.height / 2
-                            val childHalfWidth = child.width / 2
+                        index = childCount
+                    }
+                }
 
-                            if (y < child.y + childHalfHeight && x < child.x + childHalfWidth) {
-                                index = i
-                                break
-                            }
+                if (index == -1) {
+                    for (i in childCount - 1 downTo 0) {
+                        val child = destination.getChildAt(i)
+                        val childHalfHeight = child.height / 2
+                        val childHalfWidth = child.width / 2
+
+                        if (y < child.y + childHalfHeight && x < child.x + childHalfWidth) {
+                            index = i
+                            break
                         }
                     }
                 }
 
-                if (index != -1) {
-                    destination.addView(dragObject, index)
-                } else {
-                    destination.addView(dragObject)
-                }
+                destination.addView(dragObject, if (index != -1) index else childCount)
 
                 // destination.addView(dragObject) // add dragged item to the destination
 
