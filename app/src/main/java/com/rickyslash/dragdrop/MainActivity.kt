@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.card.MaterialCardView
 import com.rickyslash.dragdrop.databinding.ActivityMainBinding
+import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.viewBallThree.setOnLongClickListener {
-            val clipText = "Goal! Good job Ronaldo!"
+            val clipText = "Goal! Good job Zidane!"
             val item = ClipData.Item(clipText)
             val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
             val data = ClipData(clipText, mimeTypes, item)
@@ -106,7 +107,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            binding.tvTotal.text = totalString.joinToString(" ") { it }
+            val currentExpression = totalString.joinToString(" ") { it }
+            val result = evaluateMath(currentExpression)
+
+            if (result != null) {
+                binding.tvTotal.text = "result: $result"
+            } else {
+                binding.tvTotal.text = "Invalid expression"
+            }
         }
     }
 
@@ -197,6 +205,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> false
+        }
+    }
+
+    private fun evaluateMath(expression: String): Int? {
+        return try {
+            val result = ExpressionBuilder(expression).build().evaluate().toInt()
+            result
+        } catch (e: Exception) {
+            null
         }
     }
 }
