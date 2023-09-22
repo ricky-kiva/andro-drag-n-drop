@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/label_total"
+                android:text="@string/label_total_bottom"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -54,34 +54,10 @@
             app:flexWrap="wrap">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/view_ball_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/holo_blue_dark"
-                app:cardCornerRadius="128dp"
-                app:contentPadding="18dp"
-                app:strokeColor="@android:color/transparent">
-
-                <TextView
-                    android:id="@+id/tv_label_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:contentDescription="7"
-                    android:text="Seven"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold|italic" />
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/view_ball_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/holo_red_dark"
+                app:cardBackgroundColor="@android:color/holo_blue_light"
                 app:cardCornerRadius="128dp"
                 app:contentPadding="18dp"
                 app:strokeColor="@android:color/transparent">
@@ -99,8 +75,6 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold|italic" />
-
-
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -128,34 +102,10 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/view_ball_five"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/holo_red_light"
-                app:cardCornerRadius="128dp"
-                app:contentPadding="18dp"
-                app:strokeColor="@android:color/transparent">
-
-                <TextView
-                    android:id="@+id/tv_label_five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:contentDescription="3"
-                    android:text="Three"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold|italic" />
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/view_ball_six"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/holo_green_light"
+                app:cardBackgroundColor="@android:color/holo_red_dark"
                 app:cardCornerRadius="128dp"
                 app:contentPadding="18dp"
                 app:strokeColor="@android:color/transparent">
@@ -178,7 +128,7 @@
                 android:id="@+id/view_ball_seven"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/holo_green_light"
+                app:cardBackgroundColor="@android:color/holo_red_light"
                 app:cardCornerRadius="128dp"
                 app:contentPadding="18dp"
                 app:strokeColor="@android:color/transparent">
@@ -194,9 +144,7 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold|italic" />
-
             </com.google.android.material.card.MaterialCardView>
-
         </com.google.android.flexbox.FlexboxLayout>
 
         <com.google.android.flexbox.FlexboxLayout
@@ -206,14 +154,35 @@
             android:layout_weight="0.45"
             android:background="@android:color/holo_orange_light"
             android:padding="16dp"
-            app:alignItems="center"
             app:flexWrap="wrap">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/view_ball_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/holo_purple"
+                app:cardCornerRadius="128dp"
+                app:contentPadding="18dp"
+                app:strokeColor="@android:color/transparent">
+
+                <TextView
+                    android:id="@+id/tv_label_five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="3"
+                    android:text="Three"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic" />
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/view_ball_three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/holo_purple"
+                app:cardBackgroundColor="@android:color/holo_green_light"
                 app:cardCornerRadius="128dp"
                 app:contentPadding="18dp"
                 app:strokeColor="@android:color/transparent">
@@ -229,12 +198,30 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold|italic" />
-
-
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/view_ball_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/holo_blue_dark"
+                app:cardCornerRadius="128dp"
+                app:contentPadding="18dp"
+                app:strokeColor="@android:color/transparent">
+
+                <TextView
+                    android:id="@+id/tv_label_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="7"
+                    android:text="Seven"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic" />
+            </com.google.android.material.card.MaterialCardView>
         </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

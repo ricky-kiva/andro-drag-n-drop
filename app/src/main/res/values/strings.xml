@@ -2,5 +2,5 @@
     <string name="app_name">Drag n Drop</string>
 
     <string name="label_ball">Ball</string>
-    <string name="label_total">Total</string>
+    <string name="label_total_bottom">Bottom Total</string>
 </resources>

@@ -191,38 +191,27 @@ class MainActivity : AppCompatActivity() {
                 val x = event.x
                 val y = event.y
 
-                val childCount = destination.childCount
+                val childCount = destination.flexItemCount
                 var index = -1
 
-                if (childCount > 0) {
-                    val firstChild = destination.getChildAt(0)
-                    val lastChild = destination.getChildAt(childCount - 1)
-                    val childHalfHeight = firstChild.height / 2
-                    val childHalfWidth = firstChild.width / 2
+                for (i in 0 until childCount) {
+                    val child = destination.getReorderedChildAt(i)
+                    val params = child.layoutParams as FlexboxLayout.LayoutParams
 
-                    if (y < firstChild.y + childHalfHeight && x < firstChild.x + childHalfWidth) {
-                        index = 0
-                    } else if (y > lastChild.y + childHalfHeight && x > lastChild.x + childHalfWidth) {
-                        index = childCount
+                    val childHalfHeight = child.height / 2
+                    val childHalfWidth = child.width / 2
+
+                    if (y < child.top + childHalfHeight && x < child.left + childHalfWidth) {
+                        index = i
+                        break
                     }
                 }
 
                 if (index == -1) {
-                    for (i in childCount - 1 downTo 0) {
-                        val child = destination.getChildAt(i)
-                        val childHalfHeight = child.height / 2
-                        val childHalfWidth = child.width / 2
-
-                        if (y < child.y + childHalfHeight && x < child.x + childHalfWidth) {
-                            index = i
-                            break
-                        }
-                    }
+                    index = childCount
                 }
 
-                destination.addView(dragObject, if (index != -1) index else childCount)
-
-                // destination.addView(dragObject) // add dragged item to the destination
+                destination.addView(dragObject, index)
 
                 dragObject.visibility = View.VISIBLE // change visibility of dragged object
 
